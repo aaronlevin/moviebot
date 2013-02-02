@@ -25,7 +25,7 @@ class Leaderboard extends CometActor with CometListener {
   /** 
    * put the messages in the li elements and clear elements that have clearable
    */
-  def render = "li *" #> msgs.map { x =>
+  def render = "li *" #> msgs.sortBy{ x => x.correctGuesses }.map { x =>
     ".username *" #> x.user &
     ".correctGuesses *" #> x.correctGuesses &
     ".incorrectGuesses *" #> x.incorrectGuesses 

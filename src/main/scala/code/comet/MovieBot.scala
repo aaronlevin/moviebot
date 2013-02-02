@@ -6,6 +6,7 @@ import http._
 import actor._
 import scala.util.Random
 import com.sortable.MovieStore
+import scala.math.abs
 
 object MovieBot extends LiftActor with ListenerManager {
 
@@ -16,18 +17,21 @@ object MovieBot extends LiftActor with ListenerManager {
   private val GuessRegex = """^([iI]s it)?(.*)""".r
 
   private var currentMovie: String = movieList.head
+  private var currentTriviaList: List[String] = movieStore.getTriviaForMovieId(currentMovie).toList
 
   private val r = new Random()
 
   private def getRandomMovie: String = {
-    val id = movieList(r.nextInt % movieList.length) 
+    val id = movieList(abs(r.nextInt % movieList.length))
     id
   }
 
   def createUpdate = "cool"
 
   // correctGuess
-  private def correctGuess(message: String): Boolean = false
+  private def correctGuess(message: String): Boolean = {
+    movieStore.checkGuess(message)
+  }
 
   private def messageClassifier(message: String): UserMessageType = {
     message match {
@@ -44,15 +48,21 @@ object MovieBot extends LiftActor with ListenerManager {
         case GiveUp(message) => ChatServer ! ChatMessage("MovieBot", "Ah, %s, don't give up buddy!".format(user))
         case Guess(message) => {
           if( correctGuess(message) ) {
-            var currentMovie = getRandomMovie
-            ChatServer ! ChatMessage("MovieBot", "Nice one, %s! You're the person now, dawg.")
+            currentMovie = getRandomMovie
+            currentTriviaList = movieStore.getTriviaForMovieId(currentMovie).toList
+            ChatServer ! ChatMessage("MovieBot", "Nice one, %s! You're the person now, dawg.".format(user))
+            LeaderboardServer ! LeaderboardCorrect(user)
           } else {
             ChatServer ! ChatMessage("MovieBot", "You really think it's %s, %s?".format(message, user))
+            LeaderboardServer ! LeaderboardIncorrect(user)
           }
         }
         case _ => ChatServer ! ChatMessage("MovieBot", "ME FAIL TO PARSE MESSAGE")
       }
     }
-    case TriviaPing() => ChatServer ! ChatMessage("MovieBot", "pinged")
+    case TriviaPing() => {
+      val trivia = currentTriviaList(abs(r.nextInt % currentTriviaList.length))
+      ChatServer ! ChatMessage("MovieBot", trivia)
+    }
   }
 }
