@@ -18,12 +18,17 @@ object MovieBot extends LiftActor with ListenerManager {
 
   private var currentMovie: String = movieList.head
   private var currentTriviaList: List[String] = movieStore.getTriviaForMovieId(currentMovie).toList
+  private var lastRequestTime = System.currentTimeMillis
 
   private val r = new Random()
 
   private def getRandomMovie: String = {
     val id = movieList(abs(r.nextInt % movieList.length))
     id
+  }
+
+  private def timeSinceLastRequest = {
+    System.currentTimeMillis - lastRequestTime
   }
 
   def createUpdate = "cool"
@@ -45,7 +50,11 @@ object MovieBot extends LiftActor with ListenerManager {
     case ChatMessage(user, msg) => {
       Thread.sleep(1000) 
       messageClassifier(msg) match {
-        case GiveUp(message) => ChatServer ! ChatMessage("MovieBot", "Ah, %s, don't give up buddy!".format(user))
+        case GiveUp(message) => {
+          ChatServer ! ChatMessage("MovieBot", "If you say it, answers will come: %s".format(user))
+          currentMovie = getRandomMovie
+          currentTriviaList = movieStore.getTriviaForMovieId(currentMovie).toList
+        }
         case Guess(message) => {
           if( correctGuess(message) ) {
             currentMovie = getRandomMovie
