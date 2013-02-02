@@ -26,7 +26,7 @@ class Chat extends CometActor with CometListener {
   /** 
    * put the messages in the li elements and clear elements that have clearable
    */
-  def render = "li *" #> msgs.takeRight(chatNum).map { x =>
+  def render = "tr *" #> msgs.takeRight(chatNum).map { x =>
     ".username *" #> x.user &
     ".message *" #> x.message 
   }  & ClearClearable

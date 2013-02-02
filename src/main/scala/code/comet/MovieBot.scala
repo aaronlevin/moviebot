@@ -19,6 +19,7 @@ object MovieBot extends LiftActor with ListenerManager {
   private var currentMovie: String = movieList.head
   private var currentTriviaList: List[String] = movieStore.getTriviaForMovieId(currentMovie).toList
   private var lastRequestTime = System.currentTimeMillis
+  private var clueList: List[Int] = Nil
 
   private val r = new Random()
 
@@ -70,7 +71,23 @@ object MovieBot extends LiftActor with ListenerManager {
       }
     }
     case TriviaPing() => {
-      val trivia = currentTriviaList(abs(r.nextInt % currentTriviaList.length))
+      if (clueList.length == currentTriviaList.length) {
+        clueList = Nil
+      }
+      val id = abs(r.nextInt % currentTriviaList.length)
+      val trivia = 
+        if( clueList.contains(id) ) {
+          if( id > currentTriviaList.length - 2) {
+            clueList = clueList ::: List(0)
+            currentTriviaList(0)
+          } else {
+            clueList = clueList ::: List(id + 1)
+            currentTriviaList(id + 1)
+          }
+        } else {
+          clueList = clueList ::: List(id)
+          currentTriviaList(id)
+        }
       ChatServer ! ChatMessage("MovieBot", trivia)
     }
   }
