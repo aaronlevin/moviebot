@@ -51,7 +51,7 @@ object MovieBot extends LiftActor with ListenerManager {
       Thread.sleep(1000) 
       messageClassifier(msg) match {
         case GiveUp(message) => {
-          ChatServer ! ChatMessage("MovieBot", "If you say it, answers will come: %s".format(user))
+          ChatServer ! ChatMessage("MovieBot", "If you say it, answers will come: %s".format(movieStore.getTitle))
           currentMovie = getRandomMovie
           currentTriviaList = movieStore.getTriviaForMovieId(currentMovie).toList
         }

@@ -9,6 +9,7 @@ import Helpers._
 class Chat extends CometActor with CometListener {
   // state
   private var msgs: Vector[ChatMessage] = Vector()
+  private val chatNum = 18
 
   /**
    * When component is insantiated, register as a listener with teh chat server
@@ -25,7 +26,7 @@ class Chat extends CometActor with CometListener {
   /** 
    * put the messages in the li elements and clear elements that have clearable
    */
-  def render = "li *" #> msgs.map { x =>
+  def render = "li *" #> msgs.takeRight(chatNum).map { x =>
     ".username *" #> x.user &
     ".message *" #> x.message 
   }  & ClearClearable
