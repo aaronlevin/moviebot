@@ -5,22 +5,23 @@
   <title>Home</title>
 </head>
 <body class="lift:content_id=main">
-  <div id="main" class="lift:surround?with=default;at=content">
-   <h2>Leaderboard</h2>
-   <div class="lift:comet?type=Leaderboard">
-    Who's the best?
-    <ul>
-      <li><span class="username">username</span>: <span class="correctGuesses">2</span> / <span class="incorrectGuesses">3</span></li>
-    </ul>
+  <div id="main" class="lift:surround?with=default;at=content row-fluid">
+    <div class="span12">
+     <h2>Leaderboard</h2>
+     <div class="lift:comet?type=Leaderboard">
+      <p>Who's the best?</p>
+      <table class="table">
+        <tr><th>User</th><th>Correct Guesses</th><th>Incorrect Guesses</th></tr>
+        <tr><td><span class="username">username</span></td><td><span class="correctGuesses">2</span></td><td><span class="incorrectGuesses">3</span></td></tr>
+      </table>
+    </div>
   </div>
   <h2>Da Chat</h2>
   <div class="lift:comet?type=Chat">
     Some chat messages
-    <ul>
-      <li><span class="username">username</span> >> <span class="message">A message</span></li>
-      <li class="clearable"><span class="username">username</span> >> <span class="message">A message</span></li>
-      <li class="clearable"><span class="username">username</span> >> <span class="message">A message</span></li>
-    </ul>
+    <table class="table">
+      <tr><td><span class="username">username</span></td><td>>></td><td><span class="message">A message</span></td></tr>
+    </table>
   </div>
 
   <!-- Chat form -->
