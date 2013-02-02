@@ -28,6 +28,7 @@ object LeaderboardServer extends LiftActor with ListenerManager {
         case (Vector(), theRest) => msgs :+= LeaderboardMessage(user, 0,1)
         case (matches, theRest) => msgs = theRest :+ matches.head.copy(incorrectGuesses = matches.head.incorrectGuesses + 1)
       }
+      updateListeners()
     case LeaderboardCorrect(user) => 
       msgs.partition { x => x.user == user } match {
         case (Vector(), theRest) => msgs :+= LeaderboardMessage(user, 1,0)
