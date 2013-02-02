@@ -6,6 +6,9 @@ package comet
  */
 
 case class ChatMessage(user: String, message: String)
+case class LeaderboardMessage(user: String, correctGuesses: Int, incorrectGuesses: Int)
+case class LeaderboardCorrect(user: String)
+case class LeaderboardIncorrect(user: String)
 
 case class TriviaPing()
 
