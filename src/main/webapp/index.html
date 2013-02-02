@@ -6,29 +6,37 @@
 </head>
 <body class="lift:content_id=main">
   <div id="main" class="lift:surround?with=default;at=content row-fluid">
+    <div class="span6" style="margin-top:15px;">
+      <div class="well">
+       <h2>Leaderboard</h2>
+        <p>Who's the best?</p>
+        <table class="table">
+          <thead><tr><th>User</th><th>Correct Guesses</th><th>Incorrect Guesses</th></tr></thead>
+        </table>
+          <div class="lift:comet?type=Leaderboard">
+        <table class="table">
+          <tbody><tr><td><span class="username">username</span></td><td><span class="correctGuesses">2</span></td><td><span class="incorrectGuesses">3</span></td></tr>
+          </tbody>
+        </table>
+    </div>
+          </div>
+  </div>
+  <div class="row-fluid">
     <div class="span12">
-     <h2>Leaderboard</h2>
-     <div class="lift:comet?type=Leaderboard">
-      <p>Who's the best?</p>
-      <table class="table">
-        <tr><th>User</th><th>Correct Guesses</th><th>Incorrect Guesses</th></tr>
-        <tr><td><span class="username">username</span></td><td><span class="correctGuesses">2</span></td><td><span class="incorrectGuesses">3</span></td></tr>
-      </table>
+      <div class="lift:comet?type=Chat">
+        <div class="well">
+          <table class="table">
+            <tbody><tr><td><span class="username">username</span></td><td>>></td><td><span class="message">A message</span></td></tr></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-  <h2>Da Chat</h2>
-  <div class="lift:comet?type=Chat">
-    Some chat messages
-    <table class="table">
-      <tr><td><span class="username">username</span></td><td>>></td><td><span class="message">A message</span></td></tr>
-    </table>
-  </div>
-
   <!-- Chat form -->
   <div>
     <form class="lift:form.ajax">
       <input class="lift:ChatIn" id="chat_in" />
-      <input type="submit" value="Ask a dude" />
+      <input type="submit" value="Enter" />
     </form>
   </div>
   <!-- /Chat form -->
@@ -37,7 +45,7 @@
   <div>
    <form class="lift:form.ajax">
      <input class="lift:SetUsername" id="username" />
-     <input type="submit" value="mah name" />
+     <input type="submit" value="Username" />
    </form>
  </div>
  <!-- /User name --> 

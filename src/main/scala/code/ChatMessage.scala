@@ -16,3 +16,4 @@ sealed trait UserMessageType
 case class GiveUp(message: String) extends UserMessageType
 case class Guess(message: String) extends UserMessageType
 case class Garbage(message: String) extends UserMessageType
+case class Greeting(origin: String, message: String) extends UserMessageType

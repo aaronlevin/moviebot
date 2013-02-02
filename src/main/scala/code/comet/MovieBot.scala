@@ -15,6 +15,7 @@ object MovieBot extends LiftActor with ListenerManager {
 
   private val GiveUpRegex = """^([iI] don\'?t know|[iI] dunno|[iI] give up|[tT]ell [mM]e)(.*)""".r
   private val GuessRegex = """^([iI]s it)?(.*)""".r
+  private val HelloRegex = """^([hH]i|[hH]ello|[yY]o)(.*)""".r
 
   private var currentMovie: String = movieList.head
   private var currentTriviaList: List[String] = movieStore.getTriviaForMovieId(currentMovie).toList
@@ -42,6 +43,7 @@ object MovieBot extends LiftActor with ListenerManager {
   private def messageClassifier(message: String): UserMessageType = {
     message match {
       case GiveUpRegex(giveup, theRest) => GiveUp(message)
+      case HelloRegex(origin,_) => Greeting(origin, message)
       case GuessRegex(_, guess) => Guess(guess)
       case _ => Guess(message)
     }
@@ -49,7 +51,7 @@ object MovieBot extends LiftActor with ListenerManager {
 
   override def lowPriority = {
     case ChatMessage(user, msg) => {
-      Thread.sleep(1000) 
+      Thread.sleep(500) 
       messageClassifier(msg) match {
         case GiveUp(message) => {
           ChatServer ! ChatMessage("MovieBot", "If you say it, answers will come: %s".format(movieStore.getTitle))
@@ -66,6 +68,9 @@ object MovieBot extends LiftActor with ListenerManager {
             ChatServer ! ChatMessage("MovieBot", "You really think it's %s, %s?".format(message, user))
             LeaderboardServer ! LeaderboardIncorrect(user)
           }
+        }
+        case Greeting(origin, message) => {
+          ChatServer ! ChatMessage("MovieBot", "Well \"%s\" to you, too, %s!".format(origin,user))
         }
         case _ => ChatServer ! ChatMessage("MovieBot", "ME FAIL TO PARSE MESSAGE")
       }
