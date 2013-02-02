@@ -15,8 +15,10 @@ import comet.{ChatServer,MovieBot,ChatMessage}
 object ChatIn {
   
   def render = SHtml.onSubmit(s => {
-    ChatServer ! ChatMessage("user", s)
-    MovieBot ! ChatMessage("user", s) 
+
+    val name = SetUsername.username.is openOr "(unknown)"
+    ChatServer ! ChatMessage(name, s)
+    MovieBot ! ChatMessage(name, s) 
     SetValById("chat_in","")
   })
 }

@@ -14,6 +14,7 @@ import mapper._
 import code.model._
 import net.liftmodules.JQueryModule
 
+import code.comet.MovieBotPinger
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -32,6 +33,9 @@ class Boot {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
+
+    // Instantiate the bot pinger
+    MovieBotPinger.ping
 
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use

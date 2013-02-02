@@ -6,19 +6,19 @@ import http._
 import js._
 import JsCmds._
 import JE._
+import common.{Box,Full,Empty,Failure,ParamFailure}
 
 import comet.{ChatServer,MovieBot,ChatMessage}
 
 /**
- * ChatIn snippet
+ * Snippet to set Username
  */
 object SetUsername {
 
   object username extends SessionVar[Box[String]](Empty)
   
   def render = SHtml.onSubmit(s => {
-    ChatServer ! ChatMessage("user", s)
-    MovieBot ! ChatMessage("user", s) 
-    SetValById("chat_in","")
+    username.set(Full(s))
+    SetValById("username","")
   })
 }
