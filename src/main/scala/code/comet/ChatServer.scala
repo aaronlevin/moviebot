@@ -9,6 +9,8 @@ import actor._
  * A signleton that provides chat features to all clients
  */
 object ChatServer extends LiftActor with ListenerManager {
+
+  val totalMessages = 15
   private var msgs = Vector(ChatMessage("MovieBot", "I AM READY FOR MOVIE, YES"))
 
   /** when we update the listeners, what messages do we send?
@@ -23,7 +25,9 @@ object ChatServer extends LiftActor with ListenerManager {
    * We append them to our vector of messages and then update all the listeners
    */
   override def lowPriority = {
-    case s: ChatMessage => 
-      msgs :+= s; updateListeners()
+    case s: ChatMessage => {
+      msgs = (msgs :+ s).takeRight(totalMessages)
+      updateListeners()
+    }
   }
 }

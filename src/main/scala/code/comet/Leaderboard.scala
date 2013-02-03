@@ -10,6 +10,8 @@ class Leaderboard extends CometActor with CometListener {
   // state
   private var msgs: Vector[LeaderboardMessage] = Vector[LeaderboardMessage]()
 
+  private val totalLeaders = 5
+
   /**
    * When component is insantiated, register as a listener with teh chat server
    */
@@ -25,7 +27,7 @@ class Leaderboard extends CometActor with CometListener {
   /** 
    * put the messages in the li elements and clear elements that have clearable
    */
-  def render = "tr *" #> msgs.sortBy{ x => x.correctGuesses }.map { x =>
+  def render = "name=repeater *" #> msgs.sortBy{ x => - x.correctGuesses }.take(totalLeaders).map { x =>
     ".username *" #> x.user &
     ".correctGuesses *" #> x.correctGuesses &
     ".incorrectGuesses *" #> x.incorrectGuesses 

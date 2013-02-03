@@ -9,6 +9,7 @@ import JE._
 import common.{Box,Full,Empty,Failure,ParamFailure}
 
 import comet.{ChatServer,MovieBot,ChatMessage}
+import scala.xml.Text
 
 /**
  * Snippet to set Username
@@ -19,6 +20,6 @@ object SetUsername {
   
   def render = SHtml.onSubmit(s => {
     username.set(Full(s))
-    SetValById("username","")
+    SetHtml("currentUsername", Text("You may not always be: " + s))
   })
 }

@@ -1,6 +1,6 @@
-name := "Lift 2.5 starter template"
+name := "MovieBot"
 
-version := "0.0.1"
+version := "0.1"
 
 organization := "net.liftweb"
 

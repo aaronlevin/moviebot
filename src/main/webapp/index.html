@@ -9,20 +9,18 @@
     <div class="span6" style="margin-top:15px;">
       <div class="well">
        <h2>Leaderboard</h2>
-        <p>Who's the best?</p>
-        <table class="table">
-          <thead><tr><th>User</th><th>Correct Guesses</th><th>Incorrect Guesses</th></tr></thead>
-        </table>
-          <div class="lift:comet?type=Leaderboard">
-        <table class="table">
-          <tbody><tr><td><span class="username">username</span></td><td><span class="correctGuesses">2</span></td><td><span class="incorrectGuesses">3</span></td></tr>
+        <div class="lift:comet?type=Leaderboard">
+          <table class="table">
+            <thead><tr><th>User</th><th>Correct Guesses</th><th>Incorrect Guesses</th></tr></thead>
+            <tbody><tr name="repeater"><td><span class="username">username</span></td><td><span class="correctGuesses">2</span></td><td><span class="incorrectGuesses">3</span></td></tr>
           </tbody>
         </table>
+      </div>
     </div>
-          </div>
   </div>
   <div class="row-fluid">
     <div class="span12">
+      <h2>Chat Zone</h2>
       <div class="lift:comet?type=Chat">
         <div class="well">
           <table class="table">
@@ -33,6 +31,7 @@
     </div>
   </div>
   <!-- Chat form -->
+  <p id="currentUsername"></p>
   <div>
     <form class="lift:form.ajax">
       <input class="lift:ChatIn" id="chat_in" />
@@ -45,7 +44,7 @@
   <div>
    <form class="lift:form.ajax">
      <input class="lift:SetUsername" id="username" />
-     <input type="submit" value="Username" />
+     <input type="submit" value="Username" id="usernameSubmit" />
    </form>
  </div>
  <!-- /User name --> 
