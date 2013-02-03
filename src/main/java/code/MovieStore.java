@@ -210,7 +210,7 @@ public class MovieStore
 		for (String answer : cacheList)
 		{
 			answer = answer.toLowerCase();
-			if (guess.indexOf(answer) >= 0)
+			if (myGuess.indexOf(answer) >= 0)
 				return true;
 		}
 		return false;
