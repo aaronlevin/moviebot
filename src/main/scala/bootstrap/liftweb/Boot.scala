@@ -37,6 +37,8 @@ class Boot {
     // Instantiate the bot pinger
     MovieBotPinger.ping
 
+    LiftRules.cometRequestTimeout = Full(25)
+
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
